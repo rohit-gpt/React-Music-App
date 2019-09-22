@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -10,4 +10,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+} */
+
+.countryForm {
+  text-align: center;
+  margin: 7%;
+}
+
+.countryForm select {
+  background-color: rgb(240, 240, 240);
+  height: 40px;
+  width: 20%;
+  margin-right: 5%;
+}
+
+.countryForm button {
+  background-color: rgb(255, 136, 0);
+  height: 40px;
+  color: white;
+  width: 10%;
+  margin-left: 5%;
 }
