@@ -8,15 +8,14 @@ class Songs extends Component {
 
     state = {
         songData: "",
-        isActive: false
+        isActive: false,
+        artistData: ""
     }
 
     toggleModal = async(mbid) => {
         const api_call = await fetch(`http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${ API_KEY }&mbid=${ mbid }&format=json`);
         
         const data = await api_call.json();
-
-        console.log(data.track);
 
         this.setState({
             songData: data.track,
@@ -45,7 +44,7 @@ class Songs extends Component {
                             
                             <div key = { song.url } style = {{ width: '25%', float: 'left', textAlign: 'center' }}>
                             
-                                <img src = { song.image[2]['#text'] } alt="" onClick = {(e) => this.toggleModal(song.mbid)} />
+                                <img style={{ cursor: "pointer" }} src = { song.image[2]['#text'] } alt="" onClick = {(e) => this.toggleModal(song.mbid)} />
                                 
                                 
 
