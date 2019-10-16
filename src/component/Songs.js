@@ -23,6 +23,19 @@ class Songs extends Component {
         });
     }
 
+    toggleArtistModal = async(mbid) => {
+        const api_call = await fetch(`http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&api_key=${ API_KEY }&mbid=${ mbid }&format=json`);
+        
+        const data = await api_call.json();
+
+        console.log(data);
+
+        this.setState({
+            artistData: data,
+            isActive: !this.state.isActive
+        });
+    }
+
     closeModal = () => {
         this.setState({
             isActive: !this.state.isActive
@@ -51,7 +64,7 @@ class Songs extends Component {
                                 <br /><br />
                                 <p><b>{ song.name }</b></p>
 
-                                <p>{ song.artist.name }</p>
+                                <p onClick = {(e) => this.toggleArtistModal(song.mbid)}>{ song.artist.name }</p>
 
                                 <br /><br />
 

@@ -29,6 +29,8 @@ class App extends Component {
     const api_call = await fetch(`http://ws.audioscrobbler.com/2.0/?method=geo.gettoptracks&country=${ country }&api_key=${ API_KEY }&format=json`);
     
     const data = await api_call.json();
+
+    console.log(data.tracks.track);
     this.setState({
       songs: data.tracks.track,
       country: country
