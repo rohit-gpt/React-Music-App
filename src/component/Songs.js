@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dialog from './Dialog';
+import Artist from './Artist';
 
 const API_KEY = '08a13424cb2130db2294fd410cfae1ff';
 
@@ -8,8 +9,9 @@ class Songs extends Component {
 
     state = {
         songData: "",
-        isActive: false,
-        artistData: ""
+        isSongModalActive: false,
+        artistData: "",
+        isArtistModalActive: false
     }
 
     toggleModal = async(mbid) => {
@@ -19,26 +21,32 @@ class Songs extends Component {
 
         this.setState({
             songData: data.track,
-            isActive: !this.state.isActive
+            isSongModalActive: !this.state.isSongModalActive
         });
     }
 
-    toggleArtistModal = async(mbid) => {
-        const api_call = await fetch(`http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&api_key=${ API_KEY }&mbid=${ mbid }&format=json`);
+    toggleArtistModal = async(artist_name) => {
+        const api_call = await fetch(`http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&artist=${ artist_name }&api_key=${ API_KEY }&format=json`);
         
         const data = await api_call.json();
 
-        console.log(data);
+        console.log(data.artist);
 
         this.setState({
-            artistData: data,
-            isActive: !this.state.isActive
+            artistData: data.artist,
+            isArtistModalActive: !this.state.isArtistModalActive
         });
     }
 
     closeModal = () => {
         this.setState({
-            isActive: !this.state.isActive
+            isSongModalActive: !this.state.isSongModalActive
+        })
+    }
+
+    closeArtistModal = () => {
+        this.setState({
+            isArtistModalActive: !this.state.isArtistModalActive
         })
     }
 
@@ -47,8 +55,10 @@ class Songs extends Component {
 
             <section>
 
-                <Dialog song = { this.state.songData } closeModal = { this.closeModal} isActive = { this.state.isActive } toggleModal = { this.toggleModal } />
+                <Dialog song = { this.state.songData } closeModal = { this.closeModal} isActive = { this.state.isSongModalActive } toggleModal = { this.toggleModal } />
 
+                <Artist artist = { this.state.artistData } closeModal = { this.closeArtistModal} isActive = { this.state.isArtistModalActive } toggleModal = { this.toggleArtistModal } />
+                
                 <div className = "container">
 
                     { this.props.songs.map((song) => {
@@ -64,7 +74,7 @@ class Songs extends Component {
                                 <br /><br />
                                 <p><b>{ song.name }</b></p>
 
-                                <p onClick = {(e) => this.toggleArtistModal(song.mbid)}>{ song.artist.name }</p>
+                                <p style={{ cursor: "pointer" }} onClick = {(e) => this.toggleArtistModal(song.artist.name)}>{ song.artist.name }</p>
 
                                 <br /><br />
 
